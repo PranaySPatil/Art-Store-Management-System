@@ -18,7 +18,12 @@ class MainWindow : public QMainWindow
 
 public:
     explicit MainWindow(QWidget *parent = 0);
+    static bool isLogged;
+    static QString userName;
     ~MainWindow();
+
+    static bool getIsLogged();
+    static void setIsLogged(bool value);
 
 private slots:
     void on_actionBuy_triggered();
@@ -32,10 +37,10 @@ private slots:
 private:
     QStackedWidget *stack;
     Ui::MainWindow *ui;
+    LogInForm *loginForm;
     BuyForm *buyForm;
     SellForm *sellForm;
     ReportForm *reportForm;
-    LogInForm *loginForm;
 };
 
 #endif // MAINWINDOW_H
