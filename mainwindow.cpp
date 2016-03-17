@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include <QMessageBox>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -30,10 +31,19 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_actionBuy_triggered()
 {
-    stack->setCurrentWidget(buyForm);
-    ui->actionLog_Out->setText("LogOut");
-    qDebug() << "Buy for";
-    qDebug() << loginForm->getUserName();
+    if(loginForm->getIsLogged()){
+        buyForm->setUserName(loginForm->getUserName());
+        stack->setCurrentWidget(buyForm);
+        ui->actionLog_Out->setText("LogOut");
+        qDebug() << "Buy for";
+        qDebug() << loginForm->getUserName();
+    }
+    else{
+        QMessageBox::warning(
+                this,
+                tr("ASMS"),
+                tr("You must login first") );
+    }
 }
 
 void MainWindow::on_actionLog_Out_triggered()
@@ -46,21 +56,40 @@ void MainWindow::on_actionLog_Out_triggered()
         ui->actionLog_Out->setText("Log In");
     }
     else{
-
+        QMessageBox::warning(
+                this,
+                tr("ASMS"),
+                tr("You must login first") );
     }
 
 }
 
 void MainWindow::on_actionSell_triggered()
 {
-    stack->setCurrentWidget(sellForm);
-    ui->actionLog_Out->setText("LogOut");
-    qDebug() << "Sell for";
-    qDebug() << loginForm->getUserName();
+    if(loginForm->getIsLogged()){
+        stack->setCurrentWidget(sellForm);
+        ui->actionLog_Out->setText("LogOut");
+        qDebug() << "Sell for";
+        qDebug() << loginForm->getUserName();
+    }
+    else{
+        QMessageBox::warning(
+                this,
+                tr("ASMS"),
+                tr("You must login first") );
+    }
 }
 
 void MainWindow::on_actionReport_triggered()
 {
-    stack->setCurrentWidget(reportForm);
-    ui->actionLog_Out->setText("LogOut");
+    if(loginForm->getIsLogged()){
+        stack->setCurrentWidget(reportForm);
+        ui->actionLog_Out->setText("LogOut");
+    }
+    else{
+        QMessageBox::warning(
+                this,
+                tr("ASMS"),
+                tr("You must login first") );
+    }
 }

@@ -17,16 +17,19 @@ SOURCES += main.cpp\
     loginform.cpp \
     buyform.cpp \
     sellform.cpp \
-    reportform.cpp
+    reportform.cpp \
+    customlistitemform.cpp
 
 HEADERS  += mainwindow.h \
     loginform.h \
     buyform.h \
     sellform.h \
-    reportform.h
+    reportform.h \
+    customlistitemform.h
 
 FORMS    += mainwindow.ui \
     loginform.ui \
     buyform.ui \
     sellform.ui \
-    reportform.ui
+    reportform.ui \
+    customlistitemform.ui
