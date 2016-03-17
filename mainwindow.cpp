@@ -6,6 +6,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    ui->actionLog_Out->setText("LogIn");
     buyForm = new BuyForm;
     sellForm = new SellForm;
     reportForm = new ReportForm;
@@ -21,15 +22,6 @@ MainWindow::MainWindow(QWidget *parent) :
 bool MainWindow::isLogged = false;
 QString MainWindow::userName;
 
-bool MainWindow::getIsLogged()
-{
-    return isLogged;
-}
-
-void MainWindow::setIsLogged(bool value)
-{
-    isLogged = value;
-}
 
 MainWindow::~MainWindow()
 {
@@ -46,10 +38,17 @@ void MainWindow::on_actionBuy_triggered()
 
 void MainWindow::on_actionLog_Out_triggered()
 {
-    stack->setCurrentWidget(loginForm);
-    loginForm->setUserName("");
-    loginForm->setIsLogged(false);
-    ui->actionLog_Out->setText("Log In");
+    if(loginForm->getIsLogged()){
+        loginForm->logOut();
+        stack->setCurrentWidget(loginForm);
+        loginForm->setUserName("");
+        loginForm->setIsLogged(false);
+        ui->actionLog_Out->setText("Log In");
+    }
+    else{
+
+    }
+
 }
 
 void MainWindow::on_actionSell_triggered()

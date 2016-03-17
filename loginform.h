@@ -18,14 +18,11 @@ class LogInForm : public QWidget
 public:
     explicit LogInForm(QWidget *parent = 0);
     ~LogInForm();
-
     bool getIsLogged() const;
-
     QString getUserName() const;
-
     void setIsLogged(bool value);
-
     void setUserName(const QString &value);
+    void logOut();
 
 private slots:
     void on_pushButtonLogin_clicked();
