@@ -1,5 +1,6 @@
 #include "loginform.h"
 #include "ui_loginform.h"
+#include <QMessageBox>
 
 LogInForm::LogInForm(QWidget *parent) :
     QWidget(parent),
@@ -38,6 +39,9 @@ void LogInForm::onNetworkResponse(QNetworkReply *re)
     }
     else{
         ui->lineEditPassword->setText("");
+        QMessageBox messageBox;
+        messageBox.critical(0,"Error","Wrong username or password");
+        messageBox.setFixedSize(500,200);
     }
 }
 
