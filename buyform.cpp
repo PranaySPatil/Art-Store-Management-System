@@ -63,7 +63,7 @@ void BuyForm::serviceRequestFinished(QNetworkReply *re)
         int price = v.toObject().value("price").toString().toInt();
         QListWidgetItem* item;
         QString url, medium;
-        CustomListItemForm *widget = new CustomListItemForm(title, artist, medium, price, type, url, owner);
+        CustomListItemForm *widget = new CustomListItemForm(title, artist, medium, price, 1, url, owner);
         item = new QListWidgetItem(ui->listWidgetBuy);
         item->setSizeHint(*(new QSize(120, 80)));
         ui->listWidgetBuy->addItem(item);

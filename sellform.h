@@ -2,6 +2,10 @@
 #define SELLFORM_H
 
 #include <QWidget>
+#include <QtNetwork/QNetworkAccessManager>
+#include <QtNetwork/QNetworkReply>
+#include <QtNetwork/QNetworkRequest>
+#include <QUrlQuery>
 
 namespace Ui {
 class SellForm;
@@ -14,9 +18,17 @@ class SellForm : public QWidget
 public:
     explicit SellForm(QWidget *parent = 0);
     ~SellForm();
+    void loadPaintings();
+    QString getUserName() const;
+    void setUserName(const QString &value);
 
 private:
     Ui::SellForm *ui;
+    QNetworkAccessManager *manager;
+    QString userName;
+
+public slots:
+    void serviceRequestFinished(QNetworkReply*);
 };
 
 #endif // SELLFORM_H
