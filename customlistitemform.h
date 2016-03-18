@@ -6,6 +6,7 @@
 #include <QNetworkAccessManager>
 #include <QNetworkRequest>
 #include <QNetworkReply>
+#include <QMessageBox>
 
 namespace Ui {
 class CustomListItemForm;
@@ -32,6 +33,8 @@ private:
 private slots:
     void replyFinished(QNetworkReply* reply);
 
+    void on_labelImage_linkActivated(const QString &link);
+    void on_pushButtonBuyOrSell_clicked();
 };
 
 #endif // CUSTOMLISTITEMFORM_H

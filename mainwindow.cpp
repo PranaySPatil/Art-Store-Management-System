@@ -89,17 +89,30 @@ void MainWindow::on_actionSell_triggered()
 
 void MainWindow::on_actionReport_triggered()
 {
-    stack->setCurrentWidget(reportForm);
-//    if(loginForm->getIsLogged()){
-//        stack->setCurrentWidget(reportForm);
-//        ui->actionLog_Out->setText("LogOut");
-//    }
-//    else{
-//        QMessageBox::warning(
-//                this,
-//                tr("ASMS"),
-//                tr("You must login first") );
-//    }
+    if(loginForm->getIsLogged()){
+        QMessageBox msgBox(
+                    QMessageBox::Question,
+                    trUtf8("Which Report?"),
+                    "Buy/Sell",
+                    QMessageBox::Yes | QMessageBox::No);
+
+        msgBox.setButtonText(QMessageBox::Yes, trUtf8("Purchase"));
+        msgBox.setButtonText(QMessageBox::No, trUtf8("Sold"));
+
+        if (msgBox.exec() == QMessageBox::No) {
+            qDebug()<<"Sold Report";
+        }
+        else{
+            qDebug()<<"Purchase Report";
+        }
+        stack->setCurrentWidget(reportForm);
+    }
+    else{
+        QMessageBox::warning(
+                this,
+                tr("ASMS"),
+                tr("You must login first") );
+    }
 }
 
 void MainWindow::on_actionRefresh_triggered()
@@ -109,6 +122,8 @@ void MainWindow::on_actionRefresh_triggered()
         buyForm->refresh();
         sellForm->setUserName(loginForm->getUserName());
         sellForm->refresh();
+        reportForm->setUserName(loginForm->getUserName());
+        reportForm->refresh();
     }
     else{
         QMessageBox::warning(
@@ -124,8 +139,10 @@ void MainWindow::load_paintings()
     ui->actionLog_Out->setText("Log Out");
     buyForm->setUserName(loginForm->getUserName());
     buyForm->loadPaintings();
-    buyForm->setUserName(loginForm->getUserName());
+    sellForm->setUserName(loginForm->getUserName());
     sellForm->loadPaintings();
+    reportForm->setUserName(loginForm->getUserName());
+    reportForm->loadReport();
     profileForm->setData(loginForm->getUserName(), "Owner1", "Address1", 50434240, 34);
 }
 

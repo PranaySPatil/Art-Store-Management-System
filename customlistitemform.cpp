@@ -1,6 +1,7 @@
 #include "customlistitemform.h"
 #include "ui_customlistitemform.h"
 
+
 CustomListItemForm::CustomListItemForm(QString title, QString artist, QString medium, int price, int type, QString url, QString owner, QWidget *parent) :
     QWidget(parent),
     ui(new Ui::CustomListItemForm)
@@ -35,8 +36,19 @@ void CustomListItemForm::replyFinished(QNetworkReply *reply)
 
     if(img2->isNull())
         qDebug() << "oops";
+    QPixmap qPixMap = QPixmap::fromImage(*img2);
+    ui->labelImage->setPixmap(qPixMap);
+    ui->labelImage->setScaledContents( true );
+    ui->labelImage->setSizePolicy( QSizePolicy::Ignored, QSizePolicy::Ignored );
+    ui->labelMedium->setText(medium);
+}
 
-//    ui->label->setFixedWidth(400);
-//    ui->label->setFixedHeight(400);
-      ui->labelImage->setPixmap(QPixmap::fromImage(*img2));
+void CustomListItemForm::on_labelImage_linkActivated(const QString &link)
+{
+
+}
+
+void CustomListItemForm::on_pushButtonBuyOrSell_clicked()
+{
+
 }

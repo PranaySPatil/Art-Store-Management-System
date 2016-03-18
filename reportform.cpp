@@ -6,6 +6,20 @@ ReportForm::ReportForm(QWidget *parent) :
     ui(new Ui::ReportForm)
 {
     ui->setupUi(this);
+}
+
+ReportForm::~ReportForm()
+{
+    delete ui;
+}
+
+void ReportForm::setUserName(const QString &value)
+{
+    userName = value;
+}
+
+void ReportForm::loadReport()
+{
     QTableWidgetItem *item;
     ReportItem *rItem;
     QStringList headers;
@@ -23,7 +37,8 @@ ReportForm::ReportForm(QWidget *parent) :
     }
 }
 
-ReportForm::~ReportForm()
+void ReportForm::refresh()
 {
-    delete ui;
+    ui->tableWidgetReport->clear();
+    loadReport();
 }

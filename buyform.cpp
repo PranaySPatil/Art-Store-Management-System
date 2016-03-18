@@ -68,10 +68,10 @@ void BuyForm::serviceRequestFinished(QNetworkReply *re)
         QString owner = v.toObject().value("artstore").toString();
         int price = v.toObject().value("price").toString().toInt();
         QListWidgetItem* item;
-        QString url, medium;
+        QString url = "http://localhost:8088/artstore/paintings/painting1.jpeg", medium = "WaterColor";
         CustomListItemForm *widget = new CustomListItemForm(title, artist, medium, price, 1, url, owner);
         item = new QListWidgetItem(ui->listWidgetBuy);
-        item->setSizeHint(*(new QSize(120, 80)));
+        item->setSizeHint(*(new QSize(120, 150)));
         ui->listWidgetBuy->addItem(item);
         ui->listWidgetBuy->setItemWidget(item, widget);
     }
