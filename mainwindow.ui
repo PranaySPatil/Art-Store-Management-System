@@ -43,7 +43,15 @@
     <addaction name="separator"/>
     <addaction name="actionRefresh"/>
    </widget>
+   <widget class="QMenu" name="menuInfo">
+    <property name="title">
+     <string>Info</string>
+    </property>
+    <addaction name="actionProfile"/>
+    <addaction name="actionAbout"/>
+   </widget>
    <addaction name="menuNavigate"/>
+   <addaction name="menuInfo"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <attribute name="toolBarArea">
@@ -77,6 +85,16 @@
   <action name="actionRefresh">
    <property name="text">
     <string>Refresh</string>
+   </property>
+  </action>
+  <action name="actionProfile">
+   <property name="text">
+    <string>Profile</string>
+   </property>
+  </action>
+  <action name="actionAbout">
+   <property name="text">
+    <string>About</string>
    </property>
   </action>
  </widget>

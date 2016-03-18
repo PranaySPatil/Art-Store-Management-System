@@ -11,11 +11,15 @@ MainWindow::MainWindow(QWidget *parent) :
     sellForm = new SellForm;
     reportForm = new ReportForm;
     loginForm = new LogInForm;
+    aboutForm = new AboutForm;
+    profileForm = new ProfileForm;
     stack = ui->stackedWidget;
     stack->addWidget(loginForm);
     stack->addWidget(buyForm);
     stack->addWidget(sellForm);
     stack->addWidget(reportForm);
+    stack->addWidget(aboutForm);
+    stack->addWidget(profileForm);
     stack->setCurrentWidget(loginForm);
     QObject::connect(loginForm, SIGNAL(loggedIn()), this, SLOT(load_paintings()));
 }
@@ -63,10 +67,7 @@ void MainWindow::on_actionLog_Out_triggered()
         stack->addWidget(reportForm);
     }
     else{
-        QMessageBox::warning(
-                this,
-                tr("ASMS"),
-                tr("You must login first") );
+        stack->setCurrentWidget(loginForm);
     }
 
 }
@@ -88,16 +89,17 @@ void MainWindow::on_actionSell_triggered()
 
 void MainWindow::on_actionReport_triggered()
 {
-    if(loginForm->getIsLogged()){
-        stack->setCurrentWidget(reportForm);
-        ui->actionLog_Out->setText("LogOut");
-    }
-    else{
-        QMessageBox::warning(
-                this,
-                tr("ASMS"),
-                tr("You must login first") );
-    }
+    stack->setCurrentWidget(reportForm);
+//    if(loginForm->getIsLogged()){
+//        stack->setCurrentWidget(reportForm);
+//        ui->actionLog_Out->setText("LogOut");
+//    }
+//    else{
+//        QMessageBox::warning(
+//                this,
+//                tr("ASMS"),
+//                tr("You must login first") );
+//    }
 }
 
 void MainWindow::on_actionRefresh_triggered()
@@ -124,4 +126,23 @@ void MainWindow::load_paintings()
     buyForm->loadPaintings();
     buyForm->setUserName(loginForm->getUserName());
     sellForm->loadPaintings();
+    profileForm->setData(loginForm->getUserName(), "Owner1", "Address1", 50434240, 34);
+}
+
+void MainWindow::on_actionAbout_triggered()
+{
+    stack->setCurrentWidget(aboutForm);
+}
+
+void MainWindow::on_actionProfile_triggered()
+{
+    if(loginForm->getIsLogged()){
+        stack->setCurrentWidget(profileForm);
+    }
+    else{
+        QMessageBox::warning(
+                this,
+                tr("ASMS"),
+                tr("You must login first") );
+    }
 }

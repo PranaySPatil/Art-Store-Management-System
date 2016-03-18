@@ -7,10 +7,20 @@ ReportForm::ReportForm(QWidget *parent) :
 {
     ui->setupUi(this);
     QTableWidgetItem *item;
+    ReportItem *rItem;
     QStringList headers;
-    headers<<"Painting"<<"Artist"<<"Subject"<<"Purchased Price"<<"Optimal Price"<<"Date";
+    ui->tableWidgetReport->setColumnCount(6);
+    ui->tableWidgetReport->setRowCount(5);
+    ui->tableWidgetReport->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    headers<<"Painting"<<"Artist"<<"Subject"<<"Date"<<"Purchased Price"<<"Optimal Price";
     ui->tableWidgetReport->setHorizontalHeaderLabels(headers);
-    ui->tableWidgetReport->show();
+    for(int i=0;i<10;i++){
+        for(int j=0;j<6;j++){
+            item = new QTableWidgetItem();
+            item->setText(QString::number(i+j));
+            ui->tableWidgetReport->setItem(i, j, item);
+        }
+    }
 }
 
 ReportForm::~ReportForm()

@@ -2,6 +2,8 @@
 #define REPORTFORM_H
 
 #include <QWidget>
+#include <QDebug>
+#include <reportitem.h>
 
 namespace Ui {
 class ReportForm;

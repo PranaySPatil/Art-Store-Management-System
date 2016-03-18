@@ -7,6 +7,8 @@
 #include "sellform.h"
 #include "reportform.h"
 #include "loginform.h"
+#include "aboutform.h"
+#include "profileform.h"
 
 namespace Ui {
 class MainWindow;
@@ -36,6 +38,10 @@ private slots:
 
     void on_actionRefresh_triggered();
 
+    void on_actionAbout_triggered();
+
+    void on_actionProfile_triggered();
+
 private:
     QStackedWidget *stack;
     Ui::MainWindow *ui;
@@ -43,6 +49,8 @@ private:
     BuyForm *buyForm;
     SellForm *sellForm;
     ReportForm *reportForm;
+    AboutForm *aboutForm;
+    ProfileForm *profileForm;
 
  public slots:
     void load_paintings();
