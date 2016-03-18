@@ -37,6 +37,12 @@ void SellForm::setUserName(const QString &value)
     userName = value;
 }
 
+void SellForm::refresh()
+{
+    ui->listWidgetSell->clear();
+    loadPaintings();
+}
+
 void SellForm::serviceRequestFinished(QNetworkReply *re)
 {
     QString strReply = tr(re->readAll());

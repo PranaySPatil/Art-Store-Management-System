@@ -53,6 +53,7 @@ void LogInForm::onNetworkResponse(QNetworkReply *re)
         ui->lineEditPassword->setText("");
         ui->lineEditUserName->setText("");
         ui->pushButtonLogin->setText("LogOut");
+        emit loggedIn();
         //qDebug() << (MainWindow.userName);
     }
     else if(response == "  <strong color='red'>Invalid username or password.</strong>"){

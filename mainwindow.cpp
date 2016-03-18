@@ -7,7 +7,6 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    ui->actionLog_Out->setText("LogIn");
     buyForm = new BuyForm;
     sellForm = new SellForm;
     reportForm = new ReportForm;
@@ -18,6 +17,7 @@ MainWindow::MainWindow(QWidget *parent) :
     stack->addWidget(sellForm);
     stack->addWidget(reportForm);
     stack->setCurrentWidget(loginForm);
+    QObject::connect(loginForm, SIGNAL(loggedIn()), this, SLOT(load_paintings()));
 }
 
 bool MainWindow::isLogged = false;
@@ -32,9 +32,7 @@ MainWindow::~MainWindow()
 void MainWindow::on_actionBuy_triggered()
 {
     if(loginForm->getIsLogged()){
-        buyForm->setUserName(loginForm->getUserName());
         stack->setCurrentWidget(buyForm);
-        ui->actionLog_Out->setText("LogOut");
         qDebug() << "Buy for";
         qDebug() << loginForm->getUserName();
     }
@@ -54,6 +52,15 @@ void MainWindow::on_actionLog_Out_triggered()
         loginForm->setUserName("");
         loginForm->setIsLogged(false);
         ui->actionLog_Out->setText("Log In");
+        delete(buyForm);
+        delete(sellForm);
+        delete(reportForm);
+        buyForm = new BuyForm;
+        sellForm = new SellForm;
+        reportForm = new ReportForm;
+        stack->addWidget(buyForm);
+        stack->addWidget(sellForm);
+        stack->addWidget(reportForm);
     }
     else{
         QMessageBox::warning(
@@ -68,7 +75,6 @@ void MainWindow::on_actionSell_triggered()
 {
     if(loginForm->getIsLogged()){
         stack->setCurrentWidget(sellForm);
-        ui->actionLog_Out->setText("LogOut");
         qDebug() << "Sell for";
         qDebug() << loginForm->getUserName();
     }
@@ -92,4 +98,30 @@ void MainWindow::on_actionReport_triggered()
                 tr("ASMS"),
                 tr("You must login first") );
     }
+}
+
+void MainWindow::on_actionRefresh_triggered()
+{
+    if(loginForm->getIsLogged()){
+        buyForm->setUserName(loginForm->getUserName());
+        buyForm->refresh();
+        sellForm->setUserName(loginForm->getUserName());
+        sellForm->refresh();
+    }
+    else{
+        QMessageBox::warning(
+                this,
+                tr("ASMS"),
+                tr("You must login first") );
+    }
+}
+
+void MainWindow::load_paintings()
+{
+    qDebug()<<"Inside Slot loadPaintings";
+    ui->actionLog_Out->setText("Log Out");
+    buyForm->setUserName(loginForm->getUserName());
+    buyForm->loadPaintings();
+    buyForm->setUserName(loginForm->getUserName());
+    sellForm->loadPaintings();
 }

@@ -23,6 +23,8 @@ public:
     void setIsLogged(bool value);
     void setUserName(const QString &value);
     void logOut();
+signals:
+    void loggedIn();
 
 private slots:
     void on_pushButtonLogin_clicked();
@@ -36,6 +38,8 @@ private:
     QString user, pass;
     bool isLogged = false;
     QString userName;
+
+
 };
 
 #endif // LOGINFORM_H

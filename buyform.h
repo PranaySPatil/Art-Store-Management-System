@@ -21,6 +21,7 @@ public:
     void loadPaintings();
     QString getUserName() const;
     void setUserName(const QString &value);
+    void refresh();
 
 private:
     Ui::BuyForm *ui;

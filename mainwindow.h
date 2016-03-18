@@ -34,6 +34,8 @@ private slots:
 
     void on_actionReport_triggered();
 
+    void on_actionRefresh_triggered();
+
 private:
     QStackedWidget *stack;
     Ui::MainWindow *ui;
@@ -41,6 +43,9 @@ private:
     BuyForm *buyForm;
     SellForm *sellForm;
     ReportForm *reportForm;
+
+ public slots:
+    void load_paintings();
 };
 
 #endif // MAINWINDOW_H

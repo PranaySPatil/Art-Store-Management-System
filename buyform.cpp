@@ -37,6 +37,12 @@ void BuyForm::setUserName(const QString &value)
     userName = value;
 }
 
+void BuyForm::refresh()
+{
+    ui->listWidgetBuy->clear();
+    loadPaintings();
+}
+
 void BuyForm::serviceRequestFinished(QNetworkReply *re)
 {
     QString strReply = tr(re->readAll());
