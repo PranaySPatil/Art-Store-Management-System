@@ -24,7 +24,7 @@ public:
     void setUserName(const QString &value);
     void logOut();
 signals:
-    void loggedIn();
+    void loggedIn(QString name, QString owner, QString address, int balance, int no_of_emp);
 
 private slots:
     void on_pushButtonLogin_clicked();

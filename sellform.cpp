@@ -71,7 +71,7 @@ void SellForm::serviceRequestFinished(QNetworkReply *re)
         QString url, medium;
         CustomListItemForm *widget = new CustomListItemForm(title, artist, medium, price, 2, url);
         item = new QListWidgetItem(ui->listWidgetSell);
-        item->setSizeHint(*(new QSize(120, 80)));
+        item->setSizeHint(*(new QSize(120, 150)));
         ui->listWidgetSell->addItem(item);
         ui->listWidgetSell->setItemWidget(item, widget);
     }

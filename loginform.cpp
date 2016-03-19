@@ -42,6 +42,8 @@ void LogInForm::onNetworkResponse(QNetworkReply *re)
 {
     QString response = QObject::tr(re->readAll());
     qDebug() << response;
+    QString name, owner, address;
+    int balance, no_of_emp;
     if(response == "  <strong>You're Successfully Logged In.</strong>"){
         qDebug() << "in If";
         isLogged = true;
@@ -53,7 +55,12 @@ void LogInForm::onNetworkResponse(QNetworkReply *re)
         ui->lineEditPassword->setText("");
         ui->lineEditUserName->setText("");
         ui->pushButtonLogin->setText("LogOut");
-        emit loggedIn();
+        name = "Rusty Modern";
+        owner = "Pranay Patil";
+        address = "add";
+        balance = 34235;
+        no_of_emp = 67;
+        emit loggedIn(name, owner, address, balance, no_of_emp);
         //qDebug() << (MainWindow.userName);
     }
     else if(response == "  <strong color='red'>Invalid username or password.</strong>"){

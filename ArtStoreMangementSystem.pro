@@ -11,6 +11,8 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += core gui network widgets
 TARGET = ArtStoreMangementSystem
 TEMPLATE = app
 
+INCLUDEPATH = C:/libxl-3.6.5.0/include_cpp
+LIBS += C:/libxl-3.6.5.0/lib/libxl.lib
 
 SOURCES += main.cpp\
         mainwindow.cpp \
@@ -41,3 +43,5 @@ FORMS    += mainwindow.ui \
     customlistitemform.ui \
     aboutform.ui \
     profileform.ui
+
+RC_FILE = asms.rc

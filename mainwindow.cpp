@@ -21,7 +21,7 @@ MainWindow::MainWindow(QWidget *parent) :
     stack->addWidget(aboutForm);
     stack->addWidget(profileForm);
     stack->setCurrentWidget(loginForm);
-    QObject::connect(loginForm, SIGNAL(loggedIn()), this, SLOT(load_paintings()));
+    QObject::connect(loginForm, SIGNAL(loggedIn(QString , QString, QString, int, int)), this, SLOT(load_paintings(QString , QString, QString, int, int)));
 }
 
 bool MainWindow::isLogged = false;
@@ -133,7 +133,7 @@ void MainWindow::on_actionRefresh_triggered()
     }
 }
 
-void MainWindow::load_paintings()
+void MainWindow::load_paintings(QString name, QString owner, QString address, int balance, int no_of_emp)
 {
     qDebug()<<"Inside Slot loadPaintings";
     ui->actionLog_Out->setText("Log Out");
@@ -143,7 +143,7 @@ void MainWindow::load_paintings()
     sellForm->loadPaintings();
     reportForm->setUserName(loginForm->getUserName());
     reportForm->loadReport();
-    profileForm->setData(loginForm->getUserName(), "Owner1", "Address1", 50434240, 34);
+    profileForm->setData(name, owner, address, balance, no_of_emp);
 }
 
 void MainWindow::on_actionAbout_triggered()

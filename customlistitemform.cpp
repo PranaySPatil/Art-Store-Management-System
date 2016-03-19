@@ -1,5 +1,6 @@
 #include "customlistitemform.h"
 #include "ui_customlistitemform.h"
+#include <QInputDialog>
 
 
 CustomListItemForm::CustomListItemForm(QString title, QString artist, QString medium, int price, int type, QString url, QString owner, QWidget *parent) :
@@ -41,6 +42,11 @@ void CustomListItemForm::replyFinished(QNetworkReply *reply)
     ui->labelImage->setScaledContents( true );
     ui->labelImage->setSizePolicy( QSizePolicy::Ignored, QSizePolicy::Ignored );
     ui->labelMedium->setText(medium);
+    ui->labelArtist->setText(artist);
+    ui->labelPrice->setText(QString::number(price));
+    ui->labelTitle->setText(title);
+    if(type == 1)
+        ui->labelOwner->setText(owner);
 }
 
 void CustomListItemForm::on_labelImage_linkActivated(const QString &link)
@@ -50,5 +56,15 @@ void CustomListItemForm::on_labelImage_linkActivated(const QString &link)
 
 void CustomListItemForm::on_pushButtonBuyOrSell_clicked()
 {
+// Sell : type 2 ; Buy : type 1
+    if(type == 1){
 
+    }
+    else if(type == 2){
+        bool ok;
+        QString text = QInputDialog::getText(this, "Value",
+                           "Please Enter the selling price", QLineEdit::Normal, 0, &ok);
+        if(ok)
+            qDebug() << text;
+    }
 }
