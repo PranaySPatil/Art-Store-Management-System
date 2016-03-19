@@ -17,8 +17,10 @@ CustomListItemForm::CustomListItemForm(QString title, QString artist, QString me
     this->url = QUrl(url);
     if(type==1)
         ui->pushButtonBuyOrSell->setText("Buy");
-    else
+    else{
         ui->pushButtonBuyOrSell->setText("Sell");
+
+    }
     QNetworkAccessManager *manager = new QNetworkAccessManager();
     connect(manager, SIGNAL(finished(QNetworkReply*)), this, SLOT(replyFinished(QNetworkReply*)));
     manager->get(QNetworkRequest(url));
@@ -28,6 +30,16 @@ CustomListItemForm::CustomListItemForm(QString title, QString artist, QString me
 CustomListItemForm::~CustomListItemForm()
 {
     delete ui;
+}
+
+int CustomListItemForm::getSell() const
+{
+    return sell;
+}
+
+void CustomListItemForm::setSell(int value)
+{
+    sell = value;
 }
 
 void CustomListItemForm::replyFinished(QNetworkReply *reply)
@@ -45,8 +57,11 @@ void CustomListItemForm::replyFinished(QNetworkReply *reply)
     ui->labelArtist->setText(artist);
     ui->labelPrice->setText(QString::number(price));
     ui->labelTitle->setText(title);
+    ui->labelOwner->setText("You");
     if(type == 1)
         ui->labelOwner->setText(owner);
+    if(sell == 1)
+        ui->pushButtonBuyOrSell->setText("Sold");
 }
 
 void CustomListItemForm::on_labelImage_linkActivated(const QString &link)

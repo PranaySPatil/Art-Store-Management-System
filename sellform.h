@@ -27,6 +27,7 @@ private:
     Ui::SellForm *ui;
     QNetworkAccessManager *manager;
     QString userName;
+    QUrlQuery postData;
 
 public slots:
     void serviceRequestFinished(QNetworkReply*);

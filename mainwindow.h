@@ -48,7 +48,7 @@ private:
     LogInForm *loginForm;
     BuyForm *buyForm;
     SellForm *sellForm;
-    ReportForm *reportForm;
+    ReportForm *buyReportForm, *sellReportForm;
     AboutForm *aboutForm;
     ProfileForm *profileForm;
 

@@ -9,7 +9,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     buyForm = new BuyForm;
     sellForm = new SellForm;
-    reportForm = new ReportForm;
+    buyReportForm = new ReportForm(1);
+    sellReportForm = new ReportForm(2);
     loginForm = new LogInForm;
     aboutForm = new AboutForm;
     profileForm = new ProfileForm;
@@ -17,7 +18,8 @@ MainWindow::MainWindow(QWidget *parent) :
     stack->addWidget(loginForm);
     stack->addWidget(buyForm);
     stack->addWidget(sellForm);
-    stack->addWidget(reportForm);
+    stack->addWidget(buyReportForm);
+    stack->addWidget(sellReportForm);
     stack->addWidget(aboutForm);
     stack->addWidget(profileForm);
     stack->setCurrentWidget(loginForm);
@@ -58,13 +60,16 @@ void MainWindow::on_actionLog_Out_triggered()
         ui->actionLog_Out->setText("Log In");
         delete(buyForm);
         delete(sellForm);
-        delete(reportForm);
+        delete(sellReportForm);
+        delete(buyReportForm);
         buyForm = new BuyForm;
         sellForm = new SellForm;
-        reportForm = new ReportForm;
+        buyReportForm = new ReportForm(1);
+        sellReportForm = new ReportForm(2);
         stack->addWidget(buyForm);
         stack->addWidget(sellForm);
-        stack->addWidget(reportForm);
+        stack->addWidget(buyReportForm);
+        stack->addWidget(sellReportForm);
     }
     else{
         stack->setCurrentWidget(loginForm);
@@ -97,15 +102,17 @@ void MainWindow::on_actionReport_triggered()
                     QMessageBox::Yes | QMessageBox::No);
 
         msgBox.setButtonText(QMessageBox::Yes, trUtf8("Purchase"));
-        msgBox.setButtonText(QMessageBox::No, trUtf8("Sold"));
+        msgBox.setButtonText(QMessageBox::No, trUtf8("Sale"));
 
         if (msgBox.exec() == QMessageBox::No) {
-            qDebug()<<"Sold Report";
+            qDebug()<<"Sale Report";
+            stack->setCurrentWidget(sellReportForm);
         }
         else{
             qDebug()<<"Purchase Report";
+            stack->setCurrentWidget(buyReportForm);
         }
-        stack->setCurrentWidget(reportForm);
+
     }
     else{
         QMessageBox::warning(
@@ -122,8 +129,10 @@ void MainWindow::on_actionRefresh_triggered()
         buyForm->refresh();
         sellForm->setUserName(loginForm->getUserName());
         sellForm->refresh();
-        reportForm->setUserName(loginForm->getUserName());
-        reportForm->refresh();
+        buyReportForm->setUserName(loginForm->getUserName());
+        buyReportForm->refresh();
+        sellReportForm->setUserName(loginForm->getUserName());
+        sellReportForm->refresh();
     }
     else{
         QMessageBox::warning(
@@ -141,8 +150,10 @@ void MainWindow::load_paintings(QString name, QString owner, QString address, in
     buyForm->loadPaintings();
     sellForm->setUserName(loginForm->getUserName());
     sellForm->loadPaintings();
-    reportForm->setUserName(loginForm->getUserName());
-    reportForm->loadReport();
+    buyReportForm->setUserName(loginForm->getUserName());
+    buyReportForm->loadReport();
+    sellReportForm->setUserName(loginForm->getUserName());
+    sellReportForm->loadReport();
     profileForm->setData(name, owner, address, balance, no_of_emp);
 }
 

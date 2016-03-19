@@ -23,8 +23,11 @@ SellForm::~SellForm()
 
 void SellForm::loadPaintings()
 {
-    QUrl url("http://localhost:8088/artstore/get_paintings.php");
-    QNetworkReply* reply = manager->get(QNetworkRequest(url));
+    postData.addQueryItem("username", userName);
+    QUrl url("http://localhost:8088/artstoremgmtsys/owned_paintings.php");
+    QNetworkRequest request(url);
+    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
+    QNetworkReply* reply = manager->post(request, postData.toString(QUrl::FullyEncoded).toUtf8());
 }
 
 QString SellForm::getUserName() const
@@ -46,30 +49,29 @@ void SellForm::refresh()
 void SellForm::serviceRequestFinished(QNetworkReply *re)
 {
     QString strReply = tr(re->readAll());
-    //strReply.replace(tr("\""), tr(""));
-    //strReply.append(".");
-    qDebug() << strReply;
+//    qDebug() << strReply;
     QJsonParseError *error{nullptr};
     QJsonDocument jsonResponse = QJsonDocument::fromJson(strReply.toUtf8(), error);
     if(error)
         qDebug()<< error->errorString();
     QJsonObject jsonObject = jsonResponse.object();
-    qDebug() << jsonObject.keys();
+//    qDebug() << jsonObject.keys();
 
-    QJsonArray jsonArray = jsonObject["testData"].toArray();
+    QJsonArray jsonArray = jsonObject["owned"].toArray();
 
-    qDebug() << jsonObject["testData"].toArray();
+//    qDebug() << jsonObject["available"].toArray();
     foreach (const QJsonValue & v, jsonArray){
         QJsonObject obj = v.toObject();
-        qDebug() << obj;
-        int type, id = v.toObject().value("id").toString().toInt();
-        QString title = v.toObject().value("title").toString();
-        QString artist = v.toObject().value("artist").toString();
-        QString owner = v.toObject().value("artstore").toString();
-        int price = v.toObject().value("price").toString().toInt();
+//        qDebug() << obj;
+        int type = 2;
+        QString title = v.toObject().value("painting_name").toString();
+        QString artist = v.toObject().value("artist_name").toString();
+        QString medium = v.toObject().value("medium").toString();
+        int sell = v.toObject().value("sell").toString().toInt();
         QListWidgetItem* item;
-        QString url, medium;
-        CustomListItemForm *widget = new CustomListItemForm(title, artist, medium, price, 2, url);
+        QString url = "http://localhost:8088/artstore/paintings/painting1.jpeg";
+        CustomListItemForm *widget = new CustomListItemForm(title, artist, medium, 0, type, url);
+        widget->setSell(sell);
         item = new QListWidgetItem(ui->listWidgetSell);
         item->setSizeHint(*(new QSize(120, 150)));
         ui->listWidgetSell->addItem(item);

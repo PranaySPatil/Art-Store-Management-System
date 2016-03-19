@@ -1,6 +1,7 @@
 #include "loginform.h"
 #include "ui_loginform.h"
 #include <QMessageBox>
+#include <QtCore>
 
 LogInForm::LogInForm(QWidget *parent) :
     QWidget(parent),
@@ -20,9 +21,9 @@ void LogInForm::on_pushButtonLogin_clicked()
     if(!isLogged){
         user = ui->lineEditUserName->text();
         pass = ui->lineEditPassword->text();
-        postData.addQueryItem("uname", user);
-        postData.addQueryItem("pass", pass);
-        QNetworkRequest request(QUrl("http://localhost:8088/artstore/login.php"));
+        postData.addQueryItem("username", user);
+        postData.addQueryItem("password", pass);
+        QNetworkRequest request(QUrl("http://localhost:8088/artstoremgmtsys/login.php"));
         request.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
         connect(nam, SIGNAL(finished(QNetworkReply*)), this, SLOT(onNetworkResponse(QNetworkReply*)));
         reply = nam->post(request, postData.toString(QUrl::FullyEncoded).toUtf8());
@@ -40,35 +41,52 @@ void LogInForm::on_pushButtonLogin_clicked()
 
 void LogInForm::onNetworkResponse(QNetworkReply *re)
 {
-    QString response = QObject::tr(re->readAll());
-    qDebug() << response;
-    QString name, owner, address;
-    int balance, no_of_emp;
-    if(response == "  <strong>You're Successfully Logged In.</strong>"){
-        qDebug() << "in If";
-        isLogged = true;
-        userName = user;
-        ui->labelWelcome->setText("Welcome "+userName);
-        ui->lineEditPassword->setReadOnly(isLogged);
-        ui->lineEditUserName->setReadOnly(isLogged);
-        ui->lineEditPassword->setReadOnly(isLogged);
-        ui->lineEditPassword->setText("");
-        ui->lineEditUserName->setText("");
-        ui->pushButtonLogin->setText("LogOut");
-        name = "Rusty Modern";
-        owner = "Pranay Patil";
-        address = "add";
-        balance = 34235;
-        no_of_emp = 67;
-        emit loggedIn(name, owner, address, balance, no_of_emp);
-        //qDebug() << (MainWindow.userName);
+    QString strReply = QObject::tr(re->readAll());
+    qDebug() << strReply;
+    if(strReply.length()>1){
+        QString name, owner, address;
+        int balance, no_of_emp;
+        QJsonParseError *error{nullptr};
+        QJsonDocument jsonResponse = QJsonDocument::fromJson(strReply.toUtf8(), error);
+        if(error)
+            qDebug()<< error->errorString();
+        QJsonObject jsonObject = jsonResponse.object();
+        //qDebug() << jsonObject.keys();
+
+        QJsonArray jsonArray = jsonObject["login"].toArray();
+
+        //qDebug() << jsonObject["login"].toArray();
+        QJsonObject obj = jsonArray[0].toObject();
+        qDebug()<<obj.value("status").toString();
+        if(obj.value("status").toString().compare("Success")==0){
+            qDebug() << "in If";
+            isLogged = true;
+            userName = user;
+            ui->labelWelcome->setText("Welcome "+userName);
+            ui->lineEditPassword->setReadOnly(isLogged);
+            ui->lineEditUserName->setReadOnly(isLogged);
+            ui->lineEditPassword->setReadOnly(isLogged);
+            ui->lineEditPassword->setText("");
+            ui->lineEditUserName->setText("");
+            ui->pushButtonLogin->setText("LogOut");
+            name = obj.value("name").toString();
+            owner = obj.value("owner").toString();
+            address = obj.value("address").toString();
+            balance = obj.value("balance").toString().toInt();
+            no_of_emp = obj.value("no_of_emp").toString().toInt();
+//            qDebug() << obj.value("balance").toString().toInt();
+//            qDebug() << obj.value("no_of_emp").toString();
+            emit loggedIn(name, owner, address, balance, no_of_emp);
+            //qDebug() << (MainWindow.userName);
+        }
+        else if(obj.value("status").toString().compare("Incorrect Password") == 0){
+            ui->lineEditPassword->setText("");
+            QMessageBox messageBox;
+            messageBox.critical(0,"Error","Wrong username or password");
+            messageBox.setFixedSize(500,200);
+        }
     }
-    else if(response == "  <strong color='red'>Invalid username or password.</strong>"){
-        ui->lineEditPassword->setText("");
-        QMessageBox messageBox;
-        messageBox.critical(0,"Error","Wrong username or password");
-        messageBox.setFixedSize(500,200);
-    }
+
 }
 
 void LogInForm::setUserName(const QString &value)

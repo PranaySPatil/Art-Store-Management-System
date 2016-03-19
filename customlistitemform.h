@@ -20,6 +20,9 @@ public:
     explicit CustomListItemForm(QString title, QString artist, QString medium, int price, int type, QString url, QString owner = "", QWidget *parent = 0);
     ~CustomListItemForm();
 
+    int getSell() const;
+    void setSell(int value);
+
 private:
     Ui::CustomListItemForm *ui;
     QString title;
@@ -29,6 +32,7 @@ private:
     int type;
     QString owner = "";
     QUrl url;
+    int sell;
 
 private slots:
     void replyFinished(QNetworkReply* reply);
