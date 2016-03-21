@@ -24,6 +24,7 @@ MainWindow::MainWindow(QWidget *parent) :
     stack->addWidget(profileForm);
     stack->setCurrentWidget(loginForm);
     QObject::connect(loginForm, SIGNAL(loggedIn(QString , QString, QString, int, int)), this, SLOT(load_paintings(QString , QString, QString, int, int)));
+    QObject::connect(buyForm, SIGNAL(refresh_balance(int)), this, SLOT(refresh_balance(int)));
 }
 
 bool MainWindow::isLogged = false;
@@ -66,6 +67,7 @@ void MainWindow::on_actionLog_Out_triggered()
         sellForm = new SellForm;
         buyReportForm = new ReportForm(1);
         sellReportForm = new ReportForm(2);
+        QObject::connect(buyForm, SIGNAL(refresh_balance(int)), this, SLOT(refresh_balance(int)));
         stack->addWidget(buyForm);
         stack->addWidget(sellForm);
         stack->addWidget(buyReportForm);
@@ -163,6 +165,7 @@ void MainWindow::load_paintings(QString name, QString owner, QString address, in
 
 void MainWindow::refresh_balance(int price)
 {
+    qDebug() << "Inside Slot refresh balance";
     profileForm->setBalance(profileForm->getBalance()-price);
 }
 

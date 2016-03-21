@@ -74,8 +74,8 @@ void LogInForm::onNetworkResponse(QNetworkReply *re)
             address = obj.value("address").toString();
             balance = obj.value("balance").toString().toInt();
             no_of_emp = obj.value("no_of_emp").toString().toInt();
-            qDebug() << obj.value("balance").toString().toInt();
-            qDebug() << obj.value("no_of_emp").toString();
+            qDebug() << tr("balance: ")+obj.value("balance").toString();
+            qDebug() << tr("no_of_emp: ")+ obj.value("no_of_emp").toString();
             emit loggedIn(name, owner, address, balance, no_of_emp);
             //qDebug() << (MainWindow.userName);
         }

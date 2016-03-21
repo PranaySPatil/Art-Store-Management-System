@@ -72,7 +72,7 @@ void SellForm::serviceRequestFinished(QNetworkReply *re)
         QListWidgetItem* item;
         QString url = "http://localhost:8088/artstoremgmtsys/paintings/";
         url = url + v.toObject().value("url").toString();
-        qDebug()<<url;
+//        qDebug()<<url;
         CustomListItemForm *widget = new CustomListItemForm(pid, userName, title, artist, medium, 0, type, url);
         widget->setSell(sell);
         item = new QListWidgetItem(ui->listWidgetSell);

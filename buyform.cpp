@@ -77,9 +77,16 @@ void BuyForm::serviceRequestFinished(QNetworkReply *re)
 //        qDebug()<<url;
         //url = "http://localhost:8088/artstoremgmtsys/paintings/empty_room.jpeg";
         CustomListItemForm *widget = new CustomListItemForm(pid, userName, title, artist, medium, price, type, url, sold_to, owner);
+        QObject::connect(widget, SIGNAL(painting_bought(int)), this, SLOT(update_balance(int)));
         item = new QListWidgetItem(ui->listWidgetBuy);
         item->setSizeHint(*(new QSize(120, 150)));
         ui->listWidgetBuy->addItem(item);
         ui->listWidgetBuy->setItemWidget(item, widget);
     }
+}
+
+void BuyForm::update_balance(int price)
+{
+    qDebug()<<"Inside buy's slot";
+    emit refresh_balance(price);
 }
