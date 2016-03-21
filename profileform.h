@@ -2,6 +2,10 @@
 #define PROFILEFORM_H
 
 #include <QWidget>
+#include <QtNetwork/QNetworkAccessManager>
+#include <QtNetwork/QNetworkReply>
+#include <QtNetwork/QNetworkRequest>
+#include <QUrlQuery>
 
 namespace Ui {
 class ProfileForm;
@@ -17,6 +21,11 @@ public:
     void setData(QString name, QString owner, QString address, int balance, int no_of_emp);
 
 
+    void setBalance(int value);
+
+    int getBalance() const;
+    void refresh();
+
 private slots:
     void on_pushButtonEdit_clicked();
 
@@ -26,6 +35,9 @@ private:
     Ui::ProfileForm *ui;
     QString name, owner, address;
     int balance, no_of_emp;
+    QNetworkAccessManager *manager;
+    QString userName;
+    QUrlQuery postData;
 };
 
 #endif // PROFILEFORM_H

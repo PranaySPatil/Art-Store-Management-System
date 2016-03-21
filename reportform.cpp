@@ -77,18 +77,22 @@ void ReportForm::serviceRequestFinished(QNetworkReply *re)
          jsonArray = jsonObject["purchase_report"].toArray();
     else
         jsonArray = jsonObject["sale_report"].toArray();
-    column = 6;
-    row = 99;
-    ui->tableWidgetReport->setColumnCount(column);
-    ui->tableWidgetReport->setRowCount(row);
     if(type == 1)
         headers<<"Painting"<<"Artist"<<"Subject"<<"Date"<<"Purchase Price"<<"Optimal Price";
     else
         headers<<"Painting"<<"Artist"<<"Subject"<<"Date"<<"Selling Price"<<"Optimal Price";
-    ui->tableWidgetReport->setHorizontalHeaderLabels(headers);
     int i = 0;
     foreach (const QJsonValue & v, jsonArray){
-        qDebug()<<v.toObject();
+        i++;
+    }
+    column = 6;
+    row = i;
+    ui->tableWidgetReport->setColumnCount(column);
+    ui->tableWidgetReport->setRowCount(row);
+    ui->tableWidgetReport->setHorizontalHeaderLabels(headers);
+    i = 0;
+    foreach (const QJsonValue & v, jsonArray){
+//        qDebug()<<v.toObject();
         QString title = v.toObject().value("painting_name").toString();
         QString artist = v.toObject().value("artist_name").toString();
         QString subject = v.toObject().value("subject").toString(), price;
@@ -96,7 +100,7 @@ void ReportForm::serviceRequestFinished(QNetworkReply *re)
             price = v.toObject().value("purchase_price").toString();
         else
             price = v.toObject().value("selling_price").toString();
-        QString opt_price = "0";
+        QString opt_price = v.toObject().value("optimal_price").toString();
         QString date = v.toObject().value("date").toString();
         item = new QTableWidgetItem();
         item->setText(title);

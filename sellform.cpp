@@ -66,11 +66,14 @@ void SellForm::serviceRequestFinished(QNetworkReply *re)
         int type = 2;
         QString title = v.toObject().value("painting_name").toString();
         QString artist = v.toObject().value("artist_name").toString();
+        int pid = v.toObject().value("pid").toString().toInt();
         QString medium = v.toObject().value("medium").toString();
         int sell = v.toObject().value("sell").toString().toInt();
         QListWidgetItem* item;
-        QString url = "http://localhost:8088/artstore/paintings/painting1.jpeg";
-        CustomListItemForm *widget = new CustomListItemForm(title, artist, medium, 0, type, url);
+        QString url = "http://localhost:8088/artstoremgmtsys/paintings/";
+        url = url + v.toObject().value("url").toString();
+        qDebug()<<url;
+        CustomListItemForm *widget = new CustomListItemForm(pid, userName, title, artist, medium, 0, type, url);
         widget->setSell(sell);
         item = new QListWidgetItem(ui->listWidgetSell);
         item->setSizeHint(*(new QSize(120, 150)));

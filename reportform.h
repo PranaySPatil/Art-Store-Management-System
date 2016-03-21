@@ -3,7 +3,6 @@
 
 #include <QWidget>
 #include <QDebug>
-#include <reportitem.h>
 #include <QtNetwork/QNetworkAccessManager>
 #include <QtNetwork/QNetworkReply>
 #include <QtNetwork/QNetworkRequest>

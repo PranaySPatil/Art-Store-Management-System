@@ -11,6 +11,7 @@ ProfileForm::ProfileForm(QWidget *parent) :
     ui->lineEditEmp->setReadOnly(true);
     ui->lineEditName->setReadOnly(true);
     ui->lineEditOwner->setReadOnly(true);
+    ui->pushButtonSave->setEnabled(false);
 }
 
 ProfileForm::~ProfileForm()
@@ -58,4 +59,19 @@ void ProfileForm::on_pushButtonSave_clicked()
     owner = ui->lineEditOwner->text();
     balance = ui->lineEditBalance->text().toInt();
     no_of_emp = ui->lineEditEmp->text().toInt();
+}
+
+int ProfileForm::getBalance() const
+{
+    return balance;
+}
+
+void ProfileForm::refresh()
+{
+    ui->lineEditBalance->setText(QString::number(balance));
+}
+
+void ProfileForm::setBalance(int value)
+{
+    balance = value;
 }

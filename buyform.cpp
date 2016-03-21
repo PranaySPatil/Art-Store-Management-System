@@ -62,20 +62,24 @@ void BuyForm::serviceRequestFinished(QNetworkReply *re)
 //    qDebug() << jsonObject["available"].toArray();
     foreach (const QJsonValue & v, jsonArray){
         QJsonObject obj = v.toObject();
-        qDebug() << obj;
+//        qDebug() << obj;
         int type = 1;
         QString title = v.toObject().value("painting_name").toString();
         QString artist = v.toObject().value("artist_name").toString();
-        QString owner = v.toObject().value("sold_to").toString();
+        QString owner = v.toObject().value("current_artstore").toString();
+        QString sold_to = v.toObject().value("sold_to").toString();
         int price = v.toObject().value("price").toString().toInt();
         QString medium = v.toObject().value("medium").toString();
+        int pid = v.toObject().value("pid").toString().toInt();
         QListWidgetItem* item;
-        QString url = "http://localhost:8088/artstore/paintings/painting1.jpeg";
-        CustomListItemForm *widget = new CustomListItemForm(title, artist, medium, price, type, url, owner);
+        QString url = "http://localhost:8088/artstoremgmtsys/paintings/";
+        url = url + v.toObject().value("url").toString();
+//        qDebug()<<url;
+        //url = "http://localhost:8088/artstoremgmtsys/paintings/empty_room.jpeg";
+        CustomListItemForm *widget = new CustomListItemForm(pid, userName, title, artist, medium, price, type, url, sold_to, owner);
         item = new QListWidgetItem(ui->listWidgetBuy);
         item->setSizeHint(*(new QSize(120, 150)));
         ui->listWidgetBuy->addItem(item);
         ui->listWidgetBuy->setItemWidget(item, widget);
     }
 }
-

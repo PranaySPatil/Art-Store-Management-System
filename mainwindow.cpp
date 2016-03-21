@@ -133,6 +133,7 @@ void MainWindow::on_actionRefresh_triggered()
         buyReportForm->refresh();
         sellReportForm->setUserName(loginForm->getUserName());
         sellReportForm->refresh();
+        profileForm->refresh();
     }
     else{
         QMessageBox::warning(
@@ -154,7 +155,13 @@ void MainWindow::load_paintings(QString name, QString owner, QString address, in
     buyReportForm->loadReport();
     sellReportForm->setUserName(loginForm->getUserName());
     sellReportForm->loadReport();
+    this->balance = balance;
     profileForm->setData(name, owner, address, balance, no_of_emp);
+}
+
+void MainWindow::refresh_balance(int price)
+{
+    profileForm->setBalance(profileForm->getBalance()-price);
 }
 
 void MainWindow::on_actionAbout_triggered()

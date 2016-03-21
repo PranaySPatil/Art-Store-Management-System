@@ -21,7 +21,6 @@ SOURCES += main.cpp\
     sellform.cpp \
     reportform.cpp \
     customlistitemform.cpp \
-    reportitem.cpp \
     aboutform.cpp \
     profileform.cpp
 
@@ -31,7 +30,6 @@ HEADERS  += mainwindow.h \
     sellform.h \
     reportform.h \
     customlistitemform.h \
-    reportitem.h \
     aboutform.h \
     profileform.h
 
