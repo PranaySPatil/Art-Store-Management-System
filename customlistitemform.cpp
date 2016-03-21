@@ -50,6 +50,7 @@ void CustomListItemForm::replyFinished(QNetworkReply *reply)
     QString reqUrl = reply->url().toString();
     if(reqUrl.compare("http://localhost:8088/artstoremgmtsys/optimal_price.php") == 0){
         QString opt_price = tr(reply->readAll());
+        qDebug()<<opt_price;
         if(opt_price.compare("Sorry, no data exists for selected painting") == 0){
             QMessageBox::warning(
                     this,
@@ -137,7 +138,7 @@ void CustomListItemForm::on_pushButtonBuyOrSell_clicked()
             connect(manager, SIGNAL(finished(QNetworkReply*)), this, SLOT(replyFinished(QNetworkReply*)));
             QNetworkReply* reply = manager->post(request, postData.toString(QUrl::FullyEncoded).toUtf8());
             ui->pushButtonBuyOrSell->setText("Sold");
-            ui->pushButtonBuyOrSell->setDisabled(true);
+//            ui->pushButtonBuyOrSell->setDisabled(true);
         }
 
     }
@@ -147,7 +148,7 @@ void CustomListItemForm::on_pushButtonOptimalPrice_clicked()
 {
     //qDebug()<<"Opt Price";
     QNetworkAccessManager *manager = new QNetworkAccessManager();
-    postData.addQueryItem("pid", "1");
+    postData.addQueryItem("pid", QString::number(pid));
     QUrl url("http://localhost:8088/artstoremgmtsys/optimal_price.php");
     QNetworkRequest request(url);
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
