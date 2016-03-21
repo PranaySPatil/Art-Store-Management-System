@@ -133,6 +133,7 @@ void MainWindow::on_actionRefresh_triggered()
         buyReportForm->refresh();
         sellReportForm->setUserName(loginForm->getUserName());
         sellReportForm->refresh();
+        profileForm->setUserName(loginForm->getUserName());
         profileForm->refresh();
     }
     else{
@@ -156,6 +157,7 @@ void MainWindow::load_paintings(QString name, QString owner, QString address, in
     sellReportForm->setUserName(loginForm->getUserName());
     sellReportForm->loadReport();
     this->balance = balance;
+    profileForm->setUserName(loginForm->getUserName());
     profileForm->setData(name, owner, address, balance, no_of_emp);
 }
 

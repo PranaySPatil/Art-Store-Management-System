@@ -12,6 +12,7 @@ ProfileForm::ProfileForm(QWidget *parent) :
     ui->lineEditName->setReadOnly(true);
     ui->lineEditOwner->setReadOnly(true);
     ui->pushButtonSave->setEnabled(false);
+    manager = new QNetworkAccessManager;
 }
 
 ProfileForm::~ProfileForm()
@@ -47,6 +48,17 @@ void ProfileForm::on_pushButtonEdit_clicked()
 void ProfileForm::on_pushButtonSave_clicked()
 {
     // Save to DB
+    postData.addQueryItem("username", userName);
+    postData.addQueryItem("name", ui->lineEditName->text());
+    postData.addQueryItem("owner", ui->lineEditOwner->text());
+    postData.addQueryItem("address", ui->lineEditAddress->text());
+    postData.addQueryItem("balance", ui->lineEditBalance->text());
+    postData.addQueryItem("no_of_emp",ui->lineEditEmp->text());
+    QUrl url("http://localhost:8088/artstoremgmtsys/update_details.php");
+    QNetworkRequest request(url);
+    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
+    QObject::connect(manager, SIGNAL(finished(QNetworkReply*)), this, SLOT(serviceRequestFinished(QNetworkReply*)));
+    QNetworkReply* reply = manager->post(request, postData.toString(QUrl::FullyEncoded).toUtf8());
     ui->lineEditAddress->setReadOnly(true);
     ui->lineEditBalance->setReadOnly(true);
     ui->lineEditEmp->setReadOnly(true);
@@ -59,6 +71,21 @@ void ProfileForm::on_pushButtonSave_clicked()
     owner = ui->lineEditOwner->text();
     balance = ui->lineEditBalance->text().toInt();
     no_of_emp = ui->lineEditEmp->text().toInt();
+}
+
+void ProfileForm::serviceRequestFinished(QNetworkReply *re)
+{
+    qDebug()<<tr(re->readAll());
+}
+
+QString ProfileForm::getUserName() const
+{
+    return userName;
+}
+
+void ProfileForm::setUserName(const QString &value)
+{
+    userName = value;
 }
 
 int ProfileForm::getBalance() const

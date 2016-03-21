@@ -26,6 +26,9 @@ public:
     int getBalance() const;
     void refresh();
 
+    QString getUserName() const;
+    void setUserName(const QString &value);
+
 private slots:
     void on_pushButtonEdit_clicked();
 
@@ -38,6 +41,9 @@ private:
     QNetworkAccessManager *manager;
     QString userName;
     QUrlQuery postData;
+
+public slots:
+    void serviceRequestFinished(QNetworkReply*);
 };
 
 #endif // PROFILEFORM_H
