@@ -42,7 +42,7 @@ void LogInForm::on_pushButtonLogin_clicked()
 void LogInForm::onNetworkResponse(QNetworkReply *re)
 {
     QString strReply = QObject::tr(re->readAll());
-    qDebug() << strReply;
+//    qDebug() << strReply;
     if(strReply.length()>1){
         QString name, owner, address;
         int balance, no_of_emp;
@@ -57,7 +57,7 @@ void LogInForm::onNetworkResponse(QNetworkReply *re)
 
         //qDebug() << jsonObject["login"].toArray();
         QJsonObject obj = jsonArray[0].toObject();
-        qDebug()<<obj.value("status").toString();
+//        qDebug()<<obj.value("status").toString();
         if(obj.value("status").toString().compare("Success")==0){
             qDebug() << "in If";
             isLogged = true;
@@ -74,8 +74,8 @@ void LogInForm::onNetworkResponse(QNetworkReply *re)
             address = obj.value("address").toString();
             balance = obj.value("balance").toString().toInt();
             no_of_emp = obj.value("no_of_emp").toString().toInt();
-            qDebug() << tr("balance: ")+obj.value("balance").toString();
-            qDebug() << tr("no_of_emp: ")+ obj.value("no_of_emp").toString();
+//            qDebug() << tr("balance: ")+obj.value("balance").toString();
+//            qDebug() << tr("no_of_emp: ")+ obj.value("no_of_emp").toString();
             emit loggedIn(name, owner, address, balance, no_of_emp);
             //qDebug() << (MainWindow.userName);
         }

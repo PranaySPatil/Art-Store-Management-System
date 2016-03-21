@@ -22,8 +22,6 @@ public:
     QString getUserName() const;
     void setUserName(const QString &value);
     void refresh();
-signals:
-    void refresh_balance(int price);
 
 private:
     Ui::BuyForm *ui;
@@ -33,7 +31,6 @@ private:
 
 public slots:
     void serviceRequestFinished(QNetworkReply*);
-    void update_balance(int price);
 };
 
 #endif // BUYFORM_H

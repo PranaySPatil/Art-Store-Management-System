@@ -75,7 +75,14 @@ void ProfileForm::on_pushButtonSave_clicked()
 
 void ProfileForm::serviceRequestFinished(QNetworkReply *re)
 {
-    qDebug()<<tr(re->readAll());
+    //qDebug()<<tr(re->readAll());
+    QString req = re->url().toString();
+    if(req.compare("http://localhost:8088/artstoremgmtsys/get_balance_from_username.php") == 0){
+        QString balance = tr(re->readAll());
+        qDebug()<<balance+" "+QString::number(balance.length())+" "+QString::number(balance.compare("Username not found"));
+        if(balance.length()>1 && balance.compare("Username not found") != 0)
+            ui->lineEditBalance->setText(balance);
+    }
 }
 
 QString ProfileForm::getUserName() const
@@ -95,7 +102,13 @@ int ProfileForm::getBalance() const
 
 void ProfileForm::refresh()
 {
-    ui->lineEditBalance->setText(QString::number(balance));
+    postData.addQueryItem("username", userName);
+    QUrl url("http://localhost:8088/artstoremgmtsys/get_balance_from_username.php");
+    QNetworkRequest request(url);
+    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
+    QObject::connect(manager, SIGNAL(finished(QNetworkReply*)), this, SLOT(serviceRequestFinished(QNetworkReply*)));
+    QNetworkReply* reply = manager->post(request, postData.toString(QUrl::FullyEncoded).toUtf8());
+    //ui->lineEditBalance->setText(QString::number(balance));
 }
 
 void ProfileForm::setBalance(int value)

@@ -24,7 +24,6 @@ MainWindow::MainWindow(QWidget *parent) :
     stack->addWidget(profileForm);
     stack->setCurrentWidget(loginForm);
     QObject::connect(loginForm, SIGNAL(loggedIn(QString , QString, QString, int, int)), this, SLOT(load_paintings(QString , QString, QString, int, int)));
-    QObject::connect(buyForm, SIGNAL(refresh_balance(int)), this, SLOT(refresh_balance(int)));
 }
 
 bool MainWindow::isLogged = false;
@@ -40,8 +39,8 @@ void MainWindow::on_actionBuy_triggered()
 {
     if(loginForm->getIsLogged()){
         stack->setCurrentWidget(buyForm);
-        qDebug() << "Buy for";
-        qDebug() << loginForm->getUserName();
+//        qDebug() << "Buy for";
+//        qDebug() << loginForm->getUserName();
     }
     else{
         QMessageBox::warning(
@@ -83,8 +82,8 @@ void MainWindow::on_actionSell_triggered()
 {
     if(loginForm->getIsLogged()){
         stack->setCurrentWidget(sellForm);
-        qDebug() << "Sell for";
-        qDebug() << loginForm->getUserName();
+//        qDebug() << "Sell for";
+//        qDebug() << loginForm->getUserName();
     }
     else{
         QMessageBox::warning(
@@ -107,11 +106,11 @@ void MainWindow::on_actionReport_triggered()
         msgBox.setButtonText(QMessageBox::No, trUtf8("Sale"));
 
         if (msgBox.exec() == QMessageBox::No) {
-            qDebug()<<"Sale Report";
+//            qDebug()<<"Sale Report";
             stack->setCurrentWidget(sellReportForm);
         }
         else{
-            qDebug()<<"Purchase Report";
+//            qDebug()<<"Purchase Report";
             stack->setCurrentWidget(buyReportForm);
         }
 
@@ -148,7 +147,7 @@ void MainWindow::on_actionRefresh_triggered()
 
 void MainWindow::load_paintings(QString name, QString owner, QString address, int balance, int no_of_emp)
 {
-    qDebug()<<"Inside Slot loadPaintings";
+//    qDebug()<<"Inside Slot loadPaintings";
     ui->actionLog_Out->setText("Log Out");
     buyForm->setUserName(loginForm->getUserName());
     buyForm->loadPaintings();
@@ -163,11 +162,7 @@ void MainWindow::load_paintings(QString name, QString owner, QString address, in
     profileForm->setData(name, owner, address, balance, no_of_emp);
 }
 
-void MainWindow::refresh_balance(int price)
-{
-    qDebug() << "Inside Slot refresh balance";
-    profileForm->setBalance(profileForm->getBalance()-price);
-}
+
 
 void MainWindow::on_actionAbout_triggered()
 {

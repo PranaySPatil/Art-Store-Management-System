@@ -23,8 +23,6 @@ public:
 
     int getSell() const;
     void setSell(int value);
-signals:
-    void painting_bought(int price);
 
 private:
     Ui::CustomListItemForm *ui;

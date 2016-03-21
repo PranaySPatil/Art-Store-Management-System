@@ -53,7 +53,6 @@ $result = mysqli_query($db->con,$query);
 $row=mysqli_fetch_array($result);
 $current_artstore=$row['Name'];
 
-
 //Insert to buyers table
 $query="Insert into $username" . "_available
 		Values ( $pid, 0 );" ;
@@ -76,11 +75,11 @@ $query .="Delete from available
 		Where pid = $pid;";
 
 //Update buyers purchased table		
-$query .="Insert $username" ."_purchased 
+$query .="Insert $username" ."_purchased (pid,date,p_price,opt_price)
 		Values ( $pid, '$curr_date', $price, $optimal_price );";
 
 //Update sellers sold table				
-$query .="Insert $seller" . "_sold 
+$query .="Insert $seller" . "_sold (pid,date,s_price,opt_price)
 		Values ( $pid, '$curr_date', $price, $optimal_price );";
 
 //Update balance of buyer and seller

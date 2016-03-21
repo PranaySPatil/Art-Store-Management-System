@@ -65,12 +65,12 @@ void CustomListItemForm::replyFinished(QNetworkReply *reply)
         }
     }
     else if(reqUrl.compare("http://localhost:8088/artstoremgmtsys/buy.php") == 0){
-        qDebug()<<"Buy Response";
-        qDebug()<<tr(reply->readAll());
+//        qDebug()<<"Buy Response";
+//        qDebug()<<tr(reply->readAll());
     }
     else if(reqUrl.compare("http://localhost:8088/artstoremgmtsys/sell.php") == 0){
-        qDebug()<<"Sell Response";
-        qDebug()<<tr(reply->readAll());
+//        qDebug()<<"Sell Response";
+//        qDebug()<<tr(reply->readAll());
     }
     else{
         QImage* img2 = new QImage();
@@ -87,11 +87,13 @@ void CustomListItemForm::replyFinished(QNetworkReply *reply)
         ui->labelPrice->setText(QString::number(price));
         ui->labelTitle->setText(title);
         ui->labelOwner->setText("You");
+        if(type == 2)
+            ui->labelPriceKey->setText("Purchased At");
         if(type == 1)
             ui->labelOwner->setText(owner);
         if(sell == 1){
             ui->pushButtonBuyOrSell->setText("Sold");
-            ui->pushButtonBuyOrSell->setDisabled(true);
+            //ui->pushButtonBuyOrSell->setDisabled(true);
         }
     }
 
@@ -118,14 +120,13 @@ void CustomListItemForm::on_pushButtonBuyOrSell_clicked()
         QNetworkReply* reply = manager->post(request, postData.toString(QUrl::FullyEncoded).toUtf8());
         ui->pushButtonBuyOrSell->setText("Bought");
         ui->pushButtonBuyOrSell->setDisabled(true);
-        emit painting_bought(price);
     }
     else if(type == 2){
         bool ok;
         QString text = QInputDialog::getText(this, "Value",
                            "Please Enter the selling price", QLineEdit::Normal, 0, &ok);
         if(ok){
-            qDebug() << text;
+            //qDebug() << text;
             QNetworkAccessManager *manager = new QNetworkAccessManager();
             postData.addQueryItem("username", username);
             postData.addQueryItem("price", text);
@@ -144,7 +145,7 @@ void CustomListItemForm::on_pushButtonBuyOrSell_clicked()
 
 void CustomListItemForm::on_pushButtonOptimalPrice_clicked()
 {
-    qDebug()<<"Opt Price";
+    //qDebug()<<"Opt Price";
     QNetworkAccessManager *manager = new QNetworkAccessManager();
     postData.addQueryItem("pid", "1");
     QUrl url("http://localhost:8088/artstoremgmtsys/optimal_price.php");

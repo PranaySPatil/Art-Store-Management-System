@@ -51,9 +51,9 @@ void ReportForm::on_pushButtonAverage_clicked()
     for(int i=0;i<ui->tableWidgetReport->rowCount();i++){
         total_opt += ui->tableWidgetReport->item(i, 5)->text().toFloat();
         tol_spent += ui->tableWidgetReport->item(i, 4)->text().toFloat();
-        qDebug()<<QString::number(i)+tr(". tol spent ")+QString::number(tol_spent)+tr(", total_opt ")+QString::number(total_opt);
+//        qDebug()<<QString::number(i)+tr(". tol spent ")+QString::number(tol_spent)+tr(", total_opt ")+QString::number(total_opt);
     }
-    qDebug()<<QString::number(tol_spent/total_opt);
+//    qDebug()<<QString::number(tol_spent/total_opt);
     if(total_opt != 0)
         ui->labelAverage->setText(QString::number(tol_spent/total_opt));
 }

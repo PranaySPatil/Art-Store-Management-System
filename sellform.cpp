@@ -64,6 +64,7 @@ void SellForm::serviceRequestFinished(QNetworkReply *re)
         QJsonObject obj = v.toObject();
 //        qDebug() << obj;
         int type = 2;
+        int price = v.toObject().value("price").toString().toInt();
         QString title = v.toObject().value("painting_name").toString();
         QString artist = v.toObject().value("artist_name").toString();
         int pid = v.toObject().value("pid").toString().toInt();
@@ -73,7 +74,7 @@ void SellForm::serviceRequestFinished(QNetworkReply *re)
         QString url = "http://localhost:8088/artstoremgmtsys/paintings/";
         url = url + v.toObject().value("url").toString();
 //        qDebug()<<url;
-        CustomListItemForm *widget = new CustomListItemForm(pid, userName, title, artist, medium, 0, type, url);
+        CustomListItemForm *widget = new CustomListItemForm(pid, userName, title, artist, medium, price, type, url);
         widget->setSell(sell);
         item = new QListWidgetItem(ui->listWidgetSell);
         item->setSizeHint(*(new QSize(120, 150)));

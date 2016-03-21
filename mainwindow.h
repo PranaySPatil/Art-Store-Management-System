@@ -55,7 +55,6 @@ private:
 
  public slots:
     void load_paintings(QString name, QString owner, QString address, int balance, int no_of_emp);
-    void refresh_balance(int price);
 };
 
 #endif // MAINWINDOW_H

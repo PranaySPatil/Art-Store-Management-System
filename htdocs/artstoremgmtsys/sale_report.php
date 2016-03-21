@@ -7,7 +7,8 @@ $sale_report=array();
 $username=mysqli_escape_string($db->con,$_POST['username']);
 
 $query="Select P.name as p_name, A.name as a_name, subject, s_price, opt_price, date
-		From ($username" . "_sold natural join painting as P) join artist as A on P.id = A.id";
+		From ($username" . "_sold natural join painting as P) join artist as A on P.id = A.id
+		ORDER BY date DESC";
 $result = mysqli_query($db->con,$query);
 while ($row=mysqli_fetch_array($result)) {
 	$painting_name=$row["p_name"];
