@@ -32,3 +32,16 @@ XAMPP(for Mysql, Apache, ..), QT c++
 2. Copy the contents of htdocs in your xampp folder.
 3. Change the htdocs/artstoremgmtsys/db_config.php according to your configuration.
 
+#Screenshots
+
+<p align="center">
+  <h3>Sell Painting Screen</h3>
+  <img src="https://github.com/PranaySPatil/Art-Store-Management-System/blob/master/Screenshots/sellScreen.png?raw=true" />
+  
+  <h3>Buy Painting Screen</h3>
+  <img src="https://github.com/PranaySPatil/Art-Store-Management-System/blob/master/Screenshots/buyScreen.png?raw=true" />
+  
+  <h3>Report Screen</h3>
+  <img src="https://github.com/PranaySPatil/Art-Store-Management-System/blob/master/Screenshots/purchaseReport.png?raw=true" />
+</p>
+
